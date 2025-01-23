@@ -13,13 +13,14 @@ class Node():
 
     def __init__(self, numWeights: int) -> None:
         self.weights = []
-        self.bias = 0.0
+        self.bias = 1.0
         for i in range(0, numWeights):
-            self.weights.append(rd.randrange(0, 10))
+            self.weights.append(rd.randrange(1, 5))
 
     def compute(self, input: List[float]):
         weighted_Input = hp.dot(self.weights, input) + self.bias
-        return hp.softplus(weighted_Input)
+        output =  hp.softplus(weighted_Input)
+        return output
 
 
 
