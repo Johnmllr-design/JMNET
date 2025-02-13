@@ -15,13 +15,14 @@ class NeuralNetwork():
     def __init__(self, num_inputs, num_hidden_layers, layer_size):
         network = []
         for i in range(0, num_hidden_layers):
-            new_Layer = []
-            for i in range(0, layer_size):
-                if i == 0:
-                    new_Layer.append(Node(num_inputs))
-                else:
-                    new_Layer.append(Node(layer_size))
-            network.append(new_Layer)
+            curLayer = []
+            if i == 0:
+                for j in range(0, layer_size):
+                    curLayer.append(Node(num_inputs))
+            else:
+                for j in range(0, layer_size):
+                    curLayer.append(Node(layer_size))
+            network.append(curLayer)
         network.append([Node(layer_size)])
         self.network = network
 

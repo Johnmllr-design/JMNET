@@ -14,9 +14,11 @@ class Node:
         self.weights = []
         self.bias = 0.0
         for i in range(0, numWeights):
-            self.weights.append(rd.randrange(0, 5))
+            randNum = rd.randint(155, 389) / 100
+            randNum = randNum - int(randNum)
+            self.weights.append(randNum)
 
     def compute(self, input: List[float]):
         weighted_Input = hp.dot(self.weights, input) + self.bias
-        output = hp.softplus(weighted_Input)
+        output = hp.sigmoid(weighted_Input)
         return output

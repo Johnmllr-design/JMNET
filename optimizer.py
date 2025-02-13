@@ -1,40 +1,77 @@
 from typing import List
 from NeuralNetwork import NeuralNetwork
 from helpers import softplus_derivative
+from TrainNetwork import TrainNetwork
 
 
 class optimizer:
     def __init__(self):
         pass
 
-    def compute_weight_gradients(self, model: NeuralNetwork, layer: int, layerIndex: int, observed: List[float], predicted: List[float], layerOutputs: List[float]):
-        for weightIndex in range(0, len(model.network[layer][layerIndex].weights)):
-            #print("looking at the " + str(layerIndex) + " node in the " + str(layer) + "eth layer to optimize it's " + str(weightIndex) +"eth weight")
-            cur_sum = 0.0
-            oldWeight = model.network[layer][layerIndex].weights[weightIndex]
-            #print("it's previous weight is " + str(oldWeight))
-            for i in range(0, len(predicted)):
-                #print("at observation " + str(i) + " we are finding the difference of " + str(observed[i]) + " and " + str(predicted[i]))
-                cur_sum += -2 * (observed[i] - predicted[i]) * \
-                    layerOutputs[i][layer][weightIndex]
-            # multiply the current sum with the learning rate to get the step size
-            step_size = cur_sum * 0.1
-            # subtract the step size to get the new weight
-            model.network[layer][layerIndex].weights[weightIndex] = oldWeight - step_size
+    def backpropagate(self, networkObject: NeuralNetwork, activations: List[List[int]], trueLabel: float):
 
-    # def compute_weight_gradients(self, predicted: List[float], i: int, j: int, observed: List[float], model: NeuralNetwork, layer_outputs: List[List[List[float]]]):
+        previous_Deltas = []
+        learning_rate = 0.5
 
-    def compute_bias_gradients(self, model: NeuralNetwork, layer: int, layerIndex: int, observed: List[float], predicted: List[float]):
-        cur_Sum = 0
-        old_bias = model.network[layer][layerIndex].bias
-        for i in range(0, len(observed)):
-            cur_Sum += -2 * (observed[i] - predicted[i])
-        step_size = cur_Sum * 0.01
-        model.network[layer][layerIndex].bias = old_bias - step_size
+        for index in reversed(range(0, len(networkObject.network))):
+
+            if index == len(networkObject.network) - 1:
+                
+                networkPrediction = activations[-1][0]
+                print("the predictio  is "  + str(networkPrediction) + " and true label is " + str(trueLabel))
+                delta = (trueLabel - networkPrediction) * networkPrediction * (1 - networkPrediction)
+                print("the new delta is " + str(delta))
+                print("now using the delta to adjust node at " + str(index))
+                for i in range(0, len(networkObject.network[index][0].weights)):
+                    pass
+                #     curWeight = networkObject.network[index][0].weights[i]
+                    
+                #     print("previous activation for weight " + str(i) + " in node " + str([index, 0]) + " is " + str(activations[index- 1][i]))
+                #     print("the new weight is curWeight "  +str(curWeight) + " plus " + str(learning_rate) + " times " + str(delta) + " times "  + str(activations[index - 1][i]))
+                #     print("i is " + str(i) + " and index - 1 is " + str(index - 1))
+                #     newWeight = curWeight + (learning_rate * delta * activations[index - 1][i])
+                #     networkObject.network[index][0].weights[i] = newWeight
+
+                # networkObject.network[index][0].bias = networkObject.network[index][0].bias + (delta * learning_rate)
+                # previous_Deltas = [delta]
+            
+            else:
+                break
+                print()
+                new_deltas = []
+                print("the deltas of layer " + str(index + 1) + " are " + str(previous_Deltas))
+                for node in range(0, len(networkObject.network[index])):
+                    
+                    current_node_delta = 0.0
+                    current_node_activation = activations[index][node]
+                    
+                    for previous_Delta_Index in range(0, len(previous_Deltas)):
+                        
+                        print("adding the connection to previous delta " + str(previous_Deltas[previous_Delta_Index]) + " times weight " + str(networkObject.network[index + 1][previous_Delta_Index].weights[node]) + " at node " + str([index + 1, previous_Delta_Index]))
+                        
+                        current_node_delta += previous_Deltas[previous_Delta_Index] * networkObject.network[index + 1][previous_Delta_Index].weights[node] * (current_node_activation * (1 - current_node_activation))
+                    
+                    for weight in range(0, len(networkObject.network[index][node].weights)):
+                        old_weight = networkObject.network[index][node][weight]
+                        new_weight = old_weight  + (learning_rate * activations[index - 1][weight] * current_node_delta)
+                        networkObject.network[index][node].weights[weight] = new_weight
+                    
+                    new_deltas.append(current_node_delta)
+                previous_Deltas = new_deltas
 
 
-# Approach: take the gradient of the loss function with respect
-# to each of the weights in each node
-# dSSR with respect to the predicted = -2 (observed[i] - predicted[i])
-# dPredicted with respect to Weight w = output of node connected to current node via edge correcponding to weight w
-# so, dSSR with respect to weight w = -2 (observed[i] - predicted[i]) * output of node connected to current node via edge correcponding to weight
+
+
+            
+    
+
+nnTest = NeuralNetwork(1, 1, 2)
+op = optimizer()
+nnTest.printNetwork()
+Trainer = TrainNetwork()
+testData = [[0.5], 1]
+activations = Trainer.forward_pass(nnTest, [0.5])
+print("activations are " + str(activations))
+print()
+op.backpropagate(nnTest, activations, 1)
+
