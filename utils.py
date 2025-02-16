@@ -1,5 +1,5 @@
 from typing import List
-import random as rd
+import random
 import helpers as hp
 
 
@@ -14,8 +14,7 @@ class Node:
         self.weights = []
         self.bias = 0.0
         for i in range(0, numWeights):
-            randNum = rd.randint(155, 389) / 100
-            randNum = randNum - int(randNum)
+            randNum = random.uniform(1, 2)
             self.weights.append(randNum)
 
     def compute(self, input: List[float]):

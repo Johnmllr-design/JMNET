@@ -13,7 +13,7 @@ import helpers as hp
 class NeuralNetwork():
 
     def __init__(self, num_inputs, num_hidden_layers, layer_size):
-        network = []
+        network = [[None]]
         for i in range(0, num_hidden_layers):
             curLayer = []
             if i == 0:
@@ -28,6 +28,9 @@ class NeuralNetwork():
 
     def printNetwork(self):
         for i in range(0, len(self.network)):
-            for node in self.network[i]:
-                print("PRINTNET: node " + str(node) + "in hidden layer " + str(i) +
-                      " with weights " + str(node.weights) + " and bias " + str(node.bias))
+            if self.network[i] == [None]:
+                print("this is the input layer")
+            else:
+                for node in self.network[i]:
+                    print("PRINTNET: node " + str(node) + "in hidden layer " + str(i) +
+                        " with weights " + str(node.weights) + " and bias " + str(node.bias))
