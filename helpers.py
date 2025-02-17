@@ -16,6 +16,15 @@ def softplus(input: float) -> float:
 def softplus_derivative(input: float):
     return (1 / 1 + exp(input))
     
+def mean_squared_error(actual, predicted):
+    if len(actual) != len(predicted):
+        raise ValueError("Arrays must have the same length")
+
+    total_error = 0
+    for i in range(len(actual)):
+        total_error += (actual[i] - predicted[i]) ** 2
+    
+    return total_error / len(actual)
 
 def SSR(a1, a2) -> float:
     sum = 0.0

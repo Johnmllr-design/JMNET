@@ -1,10 +1,16 @@
+# main.py
+# TrainNetwork
+# Author: [John Miller]
+# Description: This is the main file for a self-implemented neural network from scratch.
+# It includes the declaration, forward pass, backpropagation, and training loop.
+# Date: [1/15/2025]
+
 from NeuralNetwork import NeuralNetwork
 from typing import List
-from utils import Node
-from helpers import SSR
+from helpers import mean_squared_error
 import numpy as np
 import matplotlib.pyplot as plt
-from PredictionAnalysis import display_graph
+from helpers import SSR
 from Optimizer import Optimizer
 
 
@@ -33,6 +39,7 @@ class TrainNetwork:
             i += 1
         return outputs
     
+    
     def train(self, net: NeuralNetwork, trainingData):
         
         optimizer = Optimizer()
@@ -45,37 +52,52 @@ class TrainNetwork:
             inputs.append(input[0])
 
             labels.append(label)
+        trained = False
 
-        for i in range(0, epochs):
+        while not trained:
 
-            outputs = []
-            for input, label in trainingData:
+            for i in range(0, epochs):
+
+                outputs = []
+                inputs = []
+                labels = []
+                for input, label in trainingData:
            
-                activations = self.forward_pass(net, input)
+                    activations = self.forward_pass(net, input)
 
-                outputs.append(activations[-1][0])
+                    outputs.append(activations[-1][0])
+                    inputs.append(input[0])
+                    labels.append(label)
 
-                optimizer.backpropagate(net, activations, label)
+                    optimizer.backpropagate(net, activations, label)
+            
         
-            import matplotlib.pyplot as plt
+                import matplotlib.pyplot as plt
 
-            if i == 999:
-                # Plotting the first line
-                plt.plot(inputs, labels, label='labels')
+                if i == 999:
+                    mse = mean_squared_error(labels, outputs)
+                    print("the mse is " + str(mse))
+                    if mse > 0.003:
+                        net.reset_network()
+                    else:
+                        trained = True
+                        # Plotting the first line
+                        plt.plot(inputs, labels, label='labels')
 
-                # Plotting the second line
-                plt.plot(inputs, outputs, label='predictions')
+                        # Plotting the second line
+                        plt.plot(inputs, outputs, label='predictions')
 
-                # Adding labels and title
-                plt.xlabel('X-axis')
-                plt.ylabel('Y-axis')
-                plt.title('NeuralNetwork line fitting')
+                        # Adding labels and title
+                        plt.xlabel('X-axis')
+                        plt.ylabel('Y-axis')
+                        plt.title('NeuralNetwork line fitting')
 
-                # Adding a legend
-                plt.legend()
+                        # Adding a legend
+                        plt.legend()
 
-                # Displaying the graph
-                plt.show()
+                        # Displaying the graph
+                        plt.show()
+
         
         
         

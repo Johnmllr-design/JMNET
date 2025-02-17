@@ -1,9 +1,19 @@
+# main.py
+# Neural Network Implementation
+# Author: [John Miller]
+# Description: This is the main file for a self-implemented neural network from scratch.
+# It includes demonstation code
+# Date: [1/15/2025]
+
 from TrainNetwork import TrainNetwork
 from NeuralNetwork import NeuralNetwork
 
     
-print("this is the driver Python file for a John's neural network implementation")
-net = NeuralNetwork(1, 1, 2)
+print("this is the driver Python file for a John's neural network implementation.\n")
+print("below is a sample demonstration of how the algorithm works to fit a line to a Sin curve")
+
+# declaration of a neural network with 2 hidden layers and 2 nodes in each layer
+net = NeuralNetwork(1, 1, 4)
 trainer = TrainNetwork()
 training_data =[
     [[0.0], 0.0],

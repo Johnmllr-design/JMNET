@@ -1,13 +1,14 @@
 # main.py
 # Neural Network Implementation
 # Author: [John Miller]
-# Description: This is the main file for a self-implemented neural network from scratch.
-# It includes the declaration, forward pass, backpropagation, and training loop.
+# Description: This is the main file for the declaration of the 
+# structure of the neural network
 # Date: [1/15/2025]
 
 from typing import List
 from utils import Node
 import helpers as hp
+import random
 
 
 class NeuralNetwork():
@@ -25,6 +26,15 @@ class NeuralNetwork():
             network.append(curLayer)
         network.append([Node(layer_size)])
         self.network = network
+
+    def reset_network(self):
+        for layer_index in range(1, len(self.network)):
+            for node in self.network[layer_index]:
+                for i in range(0, len(node.weights)):
+                    node.weights[i] = random.uniform(1, 5)
+                node.bias = 0.0
+
+
 
     def printNetwork(self):
         for i in range(0, len(self.network)):
