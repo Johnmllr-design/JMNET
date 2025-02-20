@@ -7,40 +7,34 @@
 
 from typing import List
 from utils import Node
-import helpers as hp
 import random
 
-
+# class to hold the declaration of a neural network. It is essentially an array of arrays of 
+# nodes, with each array representing a layer of nodes. The current implementation has one output node, 
+# which passes forward the prediction of the ith input.
 class NeuralNetwork():
 
-    def __init__(self, num_inputs, num_hidden_layers, layer_size):
+    def __init__(self, num_inputs: int, num_hidden_layers: int, layer_size: int, activation_function: str):
+
         network = [[None]]
+
         for i in range(0, num_hidden_layers):
+
             curLayer = []
             if i == 0:
+                
+                # append layer_size nodes which each take num_inputs inpus
                 for j in range(0, layer_size):
-                    curLayer.append(Node(num_inputs))
+                    curLayer.append(Node(num_inputs, activation_function))
             else:
+                # append layer_size nodes which each take num_inputs inputs
                 for j in range(0, layer_size):
-                    curLayer.append(Node(layer_size))
+                    curLayer.append(Node(layer_size, activation_function))
             network.append(curLayer)
-        network.append([Node(layer_size)])
+        
+        #append one node for the output layer
+        network.append([Node(layer_size, activation_function)])
         self.network = network
-
-    def reset_network(self):
-        for layer_index in range(1, len(self.network)):
-            for node in self.network[layer_index]:
-                for i in range(0, len(node.weights)):
-                    node.weights[i] = random.uniform(1, 5)
-                node.bias = 0.0
+        self.activation_function = activation_function
 
 
-
-    def printNetwork(self):
-        for i in range(0, len(self.network)):
-            if self.network[i] == [None]:
-                print("this is the input layer")
-            else:
-                for node in self.network[i]:
-                    print("PRINTNET: node " + str(node) + "in hidden layer " + str(i) +
-                        " with weights " + str(node.weights) + " and bias " + str(node.bias))

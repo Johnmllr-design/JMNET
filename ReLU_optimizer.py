@@ -1,25 +1,26 @@
 from typing import List
 from NeuralNetwork import NeuralNetwork
+from helpers import ReLU_derivative
 
 
-class Optimizer:
+class ReLU_optimizer:
     def __init__(self):
         pass
 
     def backpropagate(self, networkObject: NeuralNetwork, activations: List[List[float]], true_Label: float):
 
         previous_deltas = []
-        learning_rate = 0.5
+        learning_rate = 0.01
 
         for layer_index in reversed(range(1, len(networkObject.network))):
             
             #first step, we must establish the deltas of the output layer
-            
-            predicted_value = activations[-1][0]#the output of the last neuron
 
             if layer_index == len(networkObject.network) - 1:
+                
+                predicted_value = activations[layer_index][0]#the output of the last neuron
 
-                output_node_delta = 2 * (true_Label - predicted_value) * predicted_value * (1 - predicted_value)
+                output_node_delta =  (true_Label - predicted_value) * ReLU_derivative(networkObject.network[layer_index][0].z)
 
                 for weight_index in range(0, len(networkObject.network[layer_index][0].weights)):
                    
@@ -42,7 +43,7 @@ class Optimizer:
 
                         error_signal += (networkObject.network[layer_index + 1][i].weights[node_index] * previous_deltas[i])
                     
-                    current_delta = (activations[layer_index][node_index] * (1 - activations[layer_index][node_index])) * error_signal
+                    current_delta = ReLU_derivative(networkObject.network[layer_index][node_index].z) * error_signal
                     
                     for weight_index in range(0, len(networkObject.network[layer_index][node_index].weights)):
 

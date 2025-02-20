@@ -9,9 +9,9 @@ from NeuralNetwork import NeuralNetwork
 from typing import List
 from helpers import mean_squared_error
 import numpy as np
-import matplotlib.pyplot as plt
-from helpers import SSR
-from Optimizer import Optimizer
+from sigmoid_optimizer import sigmoid_optimizer
+from ReLU_optimizer import ReLU_optimizer
+from helpers import plot
 
 
 class TrainNetwork:
@@ -40,63 +40,55 @@ class TrainNetwork:
         return outputs
     
     
-    def train(self, net: NeuralNetwork, trainingData):
+    #train takes the network object and the training data, and performs
+    # 1000 epochs on the data to stochastically put each observation through the 
+    # network, and then calls the appropriate backpropagation class to adjust weights
+
+    def train(self, net: NeuralNetwork, trainingData: List):
         
-        optimizer = Optimizer()
         epochs = 1000
         inputs = []
         labels = []
-        
+        optimizer = None
+
+
+        if net.activation_function == "sigmoid":
+            optimizer = sigmoid_optimizer()
+        elif net.activation_function == "RELU":
+            optimizer = ReLU_optimizer()
+
+        # save the inputs and training labels for later plotting
         for input, label in trainingData:
 
             inputs.append(input[0])
 
             labels.append(label)
-        trained = False
 
-        while not trained:
+        for i in range(0, epochs):
 
-            for i in range(0, epochs):
-
-                outputs = []
-                inputs = []
-                labels = []
-                for input, label in trainingData:
+            outputs = []
+            inputs = []
+            labels = []
+            for input, label in trainingData:
            
-                    activations = self.forward_pass(net, input)
+                # forward pass the current input
+                activations = self.forward_pass(net, input)
 
-                    outputs.append(activations[-1][0])
-                    inputs.append(input[0])
-                    labels.append(label)
+                outputs.append(activations[-1][0])
+                inputs.append(input[0])
+                labels.append(label)
 
-                    optimizer.backpropagate(net, activations, label)
+                # backpropagate the error with respect to each weight
+                optimizer.backpropagate(net, activations, label)
+            
+
+            # if we are at the last epoch, plot the outputs of the function
+            if i == 999:
+                plot(inputs, labels, outputs)
+
+
             
         
-                import matplotlib.pyplot as plt
-
-                if i == 999:
-                    mse = mean_squared_error(labels, outputs)
-                    print("the mse is " + str(mse))
-                    if mse > 0.003:
-                        net.reset_network()
-                    else:
-                        trained = True
-                        # Plotting the first line
-                        plt.plot(inputs, labels, label='labels')
-
-                        # Plotting the second line
-                        plt.plot(inputs, outputs, label='predictions')
-
-                        # Adding labels and title
-                        plt.xlabel('X-axis')
-                        plt.ylabel('Y-axis')
-                        plt.title('NeuralNetwork line fitting')
-
-                        # Adding a legend
-                        plt.legend()
-
-                        # Displaying the graph
-                        plt.show()
 
         
         
@@ -106,5 +98,4 @@ class TrainNetwork:
 
 
     
-
 

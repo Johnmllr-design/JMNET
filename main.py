@@ -12,8 +12,14 @@ from NeuralNetwork import NeuralNetwork
 print("this is the driver Python file for a John's neural network implementation.\n")
 print("below is a sample demonstration of how the algorithm works to fit a line to a Sin curve")
 
-# declaration of a neural network with 2 hidden layers and 2 nodes in each layer
-net = NeuralNetwork(1, 1, 4)
+# declaration of a neural network with 1hidden layers and 3 nodes in each layer
+num_inputs = 1
+num_layers = 1
+num_nodes_per_layer = 3
+activation_function = "sigmoid"
+
+
+net = NeuralNetwork(num_inputs, num_layers, num_nodes_per_layer, activation_function)
 trainer = TrainNetwork()
 training_data =[
     [[0.0], 0.0],
@@ -39,9 +45,7 @@ training_data =[
     [[2.56456543], 0.5455349],
     [[2.6927937], 0.43388374],
     [[2.82102197], 0.31510856],
-    [[2.94925025], 0.19115863],
-    [[3.07747852], 0.06407022]
-]
+    [[2.94925025], 0.19115863]]
 
 trainer.train(net, training_data)
 
