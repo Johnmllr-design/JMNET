@@ -87,6 +87,7 @@ class TrainNetwork:
                 plot(inputs, labels, outputs)
 
 
+
             
         
 

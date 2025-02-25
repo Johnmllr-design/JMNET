@@ -2,7 +2,6 @@
 from math import log
 from math import exp
 import matplotlib.pyplot as plt 
-from helpers import mean_squared_error
 
 # dot product of two arrays
 def dot(a1, a2) -> float:
@@ -77,3 +76,4 @@ def plot(inputs, labels, outputs):
 
     # Displaying the graph
     plt.show()
+

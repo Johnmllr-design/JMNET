@@ -8,7 +8,7 @@ class sigmoid_optimizer:
         pass
 
     # backpropagate takes the network object, and the activations from each layer, and then uses these to calculate the
-    # partial derivatives with respect to each weight. It has a set learning rate of 0.5
+    # partial derivatives with respect to each weight. It has a set learning rate of 0.5/search
     def backpropagate(self, networkObject: NeuralNetwork, activations: List[List[float]], true_Label: float):
 
         previous_deltas = []
