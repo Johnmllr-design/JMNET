@@ -12,7 +12,7 @@ class sigmoid_optimizer:
     def backpropagate(self, networkObject: NeuralNetwork, activations: List[List[float]], true_Label: float):
 
         previous_deltas = []
-        learning_rate = 0.5
+        learning_rate = 0.7
 
         for layer_index in reversed(range(1, len(networkObject.network))):
             

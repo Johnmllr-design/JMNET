@@ -12,6 +12,7 @@ import numpy as np
 from sigmoid_optimizer import sigmoid_optimizer
 from ReLU_optimizer import ReLU_optimizer
 from helpers import plot
+import matplotlib.pyplot as plt
 
 
 class TrainNetwork:
@@ -44,11 +45,11 @@ class TrainNetwork:
     # 1000 epochs on the data to stochastically put each observation through the 
     # network, and then calls the appropriate backpropagation class to adjust weights
 
-    def train(self, net: NeuralNetwork, trainingData: List):
+    def train(self, net: NeuralNetwork, trainingData: List, epochs: int):
         
-        epochs = 1000
         inputs = []
-        labels = []
+        labels = [] 
+        losses = [] # keep track of losses per epoch
         optimizer = None
 
 
@@ -57,13 +58,8 @@ class TrainNetwork:
         elif net.activation_function == "RELU":
             optimizer = ReLU_optimizer()
 
-        # save the inputs and training labels for later plotting
-        for input, label in trainingData:
 
-            inputs.append(input[0])
-
-            labels.append(label)
-
+        
         for i in range(0, epochs):
 
             outputs = []
@@ -81,10 +77,16 @@ class TrainNetwork:
                 # backpropagate the error with respect to each weight
                 optimizer.backpropagate(net, activations, label)
             
+            print("loss at epoch " + str(i) + "is " + str(mean_squared_error(outputs, labels)))
+            losses.append(mean_squared_error(outputs, labels))
+
+            
 
             # if we are at the last epoch, plot the outputs of the function
-            if i == 999:
+            if i == epochs - 1:
                 plot(inputs, labels, outputs)
+                plt.plot(losses[10:len(losses)])
+                plt.show()
 
 
 

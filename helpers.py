@@ -1,7 +1,10 @@
 # an auxillary helpers class with short, mathematical functions
 from math import log
 from math import exp
-import matplotlib.pyplot as plt 
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
 
 # dot product of two arrays
 def dot(a1, a2) -> float:
@@ -77,3 +80,40 @@ def plot(inputs, labels, outputs):
     # Displaying the graph
     plt.show()
 
+def plot_data_3d(data):
+    """
+    Plots a 3D scatter plot where:
+    - input1 is on the x-axis
+    - input2 is on the y-axis
+    - output and label are plotted on the z-axis, differentiated by color
+    """
+    # Extracting columns from the data
+    input1 = [item[0] for item in data]
+    input2 = [item[1] for item in data]
+    output = [item[2] for item in data]
+    labels = [item[3] for item in data]
+
+    # Convert lists to numpy arrays for better handling
+    input1 = np.array(input1)
+    input2 = np.array(input2)
+    output = np.array(output)
+    labels = np.array(labels)
+
+    # Create a 3D scatter plot
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Plotting both output and label on the z-axis
+    ax.scatter(input1, input2, output, c='blue', label='Output', s=50)
+    ax.scatter(input1, input2, labels, c='red', label='Label', s=50)
+
+    # Adding labels to the axes
+    ax.set_xlabel('Temperature')
+    ax.set_ylabel('humidity')
+    ax.set(zlabel = 'probability of rainfall')
+
+    # Adding a legend
+    ax.legend()
+
+    # Show the plot
+    plt.show()

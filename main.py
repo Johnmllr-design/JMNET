@@ -15,8 +15,8 @@ print("below is a sample demonstration of how the algorithm works to fit a line 
 
 # declaration of a neural network with 1hidden layers and 3 nodes in each layer
 num_inputs = 1
-num_layers = 2
-num_nodes_per_layer = 4
+num_layers = 3
+num_nodes_per_layer = 10
 activation_function = "sigmoid"
 
 
@@ -25,7 +25,7 @@ trainer = TrainNetwork()
 
 
 # Generate input values (e.g., from 0 to 2*pi)
-inputs = np.linspace(0, 10 * np.pi, 1000)  # 100 points between 0 and 2*pi
+inputs = np.linspace(0, 10 * np.pi, 10000)  # 1000 points between 0 and 20*pi
 
 # Compute cosine values
 cosine_values = np.cos(inputs)
@@ -35,6 +35,7 @@ scaled_cosine_values = (cosine_values + 1) / 2
 
 # Create the dataset in the form [[input], output]
 dataset = [[[x], y] for x, y in zip(inputs, scaled_cosine_values)]
-
-trainer.train(net, dataset)
+epochs = 20
+# train the network "net" with the dataset
+trainer.train(net, dataset, epochs)
 

@@ -16,7 +16,7 @@ class Node:
         self.z = -1
         self.activation_function = activation_function
         for i in range(0, numWeights):
-            randNum = random.uniform(1, 2)
+            randNum = random.uniform(0, 1)
             self.weights.append(randNum)
 
     def compute(self, input: List[float]):
