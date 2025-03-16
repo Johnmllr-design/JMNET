@@ -12,16 +12,24 @@ import numpy as np
 from sigmoid_optimizer import sigmoid_optimizer
 from ReLU_optimizer import ReLU_optimizer
 from helpers import plot
-import matplotlib.pyplot as plt
 
 
 class TrainNetwork:
     def __init__(self):
         pass
 
-    def input_verification(self, net: NeuralNetwork, training_data) -> bool:
-        return len(net.network[0][0].weights) == len(training_data[0][0])
+    # input verification ensures that if a network was established to have x inputs,
+    # the input provided will match that size. it uses the trick where the first layer of the 
+    # neural network is [None], representing the "input layer" that simly passes on the features
+    # to the hidden layer
+    def input_verification(self, net: NeuralNetwork, training_data: List) -> bool:
+        if len(net.network[1][0].weights) == len(training_data[0][0]):
+            return True
+        else:
+            raise ValueError("input feature size doesn't match the model's architecture. Redefine your model")
 
+    # forward pass is a function to pass the input through the network and save the outputs
+    # of each node in each layer, stored as an 2D array of node outputs
     def forward_pass(self, net: NeuralNetwork, observation: List[float]):
         
         current_input = observation
@@ -38,6 +46,7 @@ class TrainNetwork:
             
             current_input = layer_Outputs
             i += 1
+        
         return outputs
     
     
@@ -48,8 +57,7 @@ class TrainNetwork:
     def train(self, net: NeuralNetwork, trainingData: List, epochs: int):
         
         inputs = []
-        labels = [] 
-        losses = [] # keep track of losses per epoch
+        labels = []
         optimizer = None
 
 
@@ -58,35 +66,34 @@ class TrainNetwork:
         elif net.activation_function == "RELU":
             optimizer = ReLU_optimizer()
 
+        # save the inputs and training labels for later plotting
+        for input, label in trainingData:
 
+            inputs.append(input)
+
+            labels.append(label)
         
+        # determine if the number of input features is correct for the model
+        self.input_verification(net, trainingData)
+
         for i in range(0, epochs):
 
-            outputs = []
-            inputs = []
-            labels = []
+            outputs = [] # use an array to store the outputs of each input for the current epoch
+
             for input, label in trainingData:
            
                 # forward pass the current input
                 activations = self.forward_pass(net, input)
 
                 outputs.append(activations[-1][0])
-                inputs.append(input[0])
-                labels.append(label)
 
                 # backpropagate the error with respect to each weight
                 optimizer.backpropagate(net, activations, label)
-            
-            print("loss at epoch " + str(i) + "is " + str(mean_squared_error(outputs, labels)))
-            losses.append(mean_squared_error(outputs, labels))
-
             
 
             # if we are at the last epoch, plot the outputs of the function
             if i == epochs - 1:
                 plot(inputs, labels, outputs)
-                plt.plot(losses[10:len(losses)])
-                plt.show()
 
 
 

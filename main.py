@@ -16,7 +16,7 @@ print("below is a sample demonstration of how the algorithm works to fit a line 
 # declaration of a neural network with 1hidden layers and 3 nodes in each layer
 num_inputs = 1
 num_layers = 3
-num_nodes_per_layer = 10
+num_nodes_per_layer = 15
 activation_function = "sigmoid"
 
 
@@ -35,7 +35,7 @@ scaled_cosine_values = (cosine_values + 1) / 2
 
 # Create the dataset in the form [[input], output]
 dataset = [[[x], y] for x, y in zip(inputs, scaled_cosine_values)]
-epochs = 20
+epochs = 10
 # train the network "net" with the dataset
 trainer.train(net, dataset, epochs)
 
