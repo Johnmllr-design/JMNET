@@ -1,4 +1,4 @@
-# JJMNET: Neural Network from Scratch 🧠  
+# JMNET: Neural Network from Scratch 🧠  
 
 This repository contains a self-made neural network implementation written in Python. The network supports forward propagation, backpropagation, and training using gradient descent. It was written as a fun side project to grow in ML/AI knowledge by myself, John M. you can test it with the sample dataset provided in the main.py file, or follow the later instructions to test it with your own data.
 
