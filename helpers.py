@@ -3,8 +3,6 @@ from math import log
 from math import exp
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-
 
 # linear algebraic dot product of two arrays
 def dot(a1, a2) -> float:
@@ -69,7 +67,6 @@ def sigmid_derivative(input: float):
 
 
 def plot(inputs, labels, output):
-
     if len(inputs[0]) == 2:
         # Extracting columns from the data
         input1 = [arr[0] for arr in inputs]
@@ -86,13 +83,13 @@ def plot(inputs, labels, output):
         ax = fig.add_subplot(111, projection="3d")
 
         # Plotting both output and label on the z-axis
-        ax.scatter(input1, input2, output, c="blue", label="Output", s=50)
+        ax.scatter(input1, input2, output, c="blue", label="Prediction", s=50)
         ax.scatter(input1, input2, labels, c="red", label="Label", s=50)
 
         # Adding labels to the axes
-        ax.set_xlabel("Temperature")
-        ax.set_ylabel("humidity")
-        ax.set(zlabel="probability of rainfall")
+        ax.set_xlabel("Leadership ability (scaled)")
+        ax.set_ylabel("Years of experience as junior dev (scaled)")
+        ax.set(zlabel= "likelihood of promotion")
 
         # Adding a legend
         ax.legend()
@@ -119,3 +116,12 @@ def plot(inputs, labels, output):
 
         # Displaying the graph
         plt.show()
+
+# plot the losses of the program, epoch by epoch
+def plot_losses(losses):
+    plt.plot(losses) 
+
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+
+    plt.show()   
