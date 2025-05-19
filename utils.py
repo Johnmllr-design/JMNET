@@ -13,7 +13,6 @@ class Node:
     def __init__(self, numWeights: int, activation_function: str) -> None:
         self.weights = []
         self.bias = 0.0
-        self.z = -1
         self.activation_function = activation_function
         for i in range(0, numWeights):
             randNum = random.uniform(0, 1)

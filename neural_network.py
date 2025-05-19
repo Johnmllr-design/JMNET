@@ -7,7 +7,6 @@
 
 from typing import List
 from utils import Node
-import random
 
 
 # class to hold the declaration of a neural network. It is essentially an array of arrays of

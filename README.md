@@ -5,7 +5,7 @@ This repository contains a self-made neural network implementation written in Py
 ## Features  
 ✅ Custom-built neural network (no external ML libraries) supporting a variety of combinations of input and output features and 
 activation functions, with additional supports on the way)  
-✅ Supports multiple layers and activation functions (sigmoid, RELu)
+✅ Supports the sigmoid activation function
 ✅ Stochastic gradient descent (SGD) and backpropagation for training via the chain rule
 ✅ Works with various datasets  
 

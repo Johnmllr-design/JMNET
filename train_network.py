@@ -5,14 +5,12 @@
 # NeuralNetwork object
 # Date: [1/15/2025]
 
-from NeuralNetwork import NeuralNetwork
+from neural_network import NeuralNetwork
 from typing import List
 from helpers import mean_squared_error
 import numpy as np
-from sigmoid_optimizer import sigmoid_optimizer
-from ReLU_optimizer import ReLU_optimizer
+from optimizers import sigmoid_optimizer
 from helpers import plot
-from helpers import plot_losses 
 
 
 class TrainNetwork:
@@ -59,10 +57,8 @@ class TrainNetwork:
         labels = []
         optimizer = None
 
-        if net.activation_function == "sigmoid":
-            optimizer = sigmoid_optimizer()
-        elif net.activation_function == "RELU":
-            optimizer = ReLU_optimizer()
+        # declare an optimizer object for weight adjustments
+        optimizer = sigmoid_optimizer()
 
         # save the inputs and training labels for later plotting
         for input, label in trainingData:
@@ -87,8 +83,5 @@ class TrainNetwork:
                 # backpropagate the error with respect to each weight
                 optimizer.backpropagate(net, activations, label)
             losses.append(mean_squared_error(labels, outputs))
-
-            # if we are at the last epoch, plot the outputs of the function
-            if i == epochs - 1:
-                plot(inputs, labels, outputs)
-                plot_losses(losses)
+        
+        return [inputs, labels, outputs]                        # return training metadata to caller
