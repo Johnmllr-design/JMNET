@@ -14,4 +14,6 @@ activation functions, with additional supports on the way)
 ### Installation  
 Clone the repository:  
 ```bash
-git clone [https://github.com/Johnmllr-design/Neural-Network.git]
+git clone [https://github.com/Johnmllr-design/JMNET.git]
+```
+Use the provided main.py file along with an assortment of datasets to experiment and tinker as you see fit. 
