@@ -1,6 +1,6 @@
 # 🧠 JMNet – A Neural Network From Scratch
 
-This repo contains a self-made neural network I built in Python from scratch — no TensorFlow, no PyTorch, just the handmade application of the chain rule, the derivative, the dot product operations which I learned in class (calc 1) to a real world problem that I found interesting (sleep habitts).  I built this mostly for fun and to get a deeper understanding of how neural nets actually work under the hood. It supports forward and backward propagation, stochastic gradient descent, and training with real data.
+This repo contains a self-made neural network I built in Python from scratch — no TensorFlow ML library, no PyTorch ML library, just the handmade application of the chain rule, the derivative, the dot product operations which I learned in class (calc 1) to a real world problem that I found interesting (sleep habits), and the Matplot library for ease of data visualization.  I built this mostly for fun and to get a deeper understanding of how neural nets actually work under the hood. It supports forward and backward propagation, stochastic gradient descent, and training with real data.
 
 You can try it out with the sample dataset in `main.py`, or plug in your own dataset and see how it performs.
 
