@@ -30,7 +30,7 @@ You can try it out with the sample dataset in `main.py`, or plug in your own dat
 
 1. Clone the repo
 2. Run `main.py` to train and visualize the sample dataset within the repository
-3. Want to try your own data? Replace the input arrays and rerun — the rest takes care of itself
+3. Want to try your own data? simply format the dataset to be of the form [[input1, input2, ....inputn], label],...] and normalize the data to between 0 and 1.
 
 ---
 
