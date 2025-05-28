@@ -25,13 +25,13 @@ class sigmoid_optimizer:
             if layer_index == len(networkObject.network) - 1:
                 # the delta of the output node for the sigmoid function with respect to the output
                 # node is 2 * label - prediction * (prediction * (1 - prediction))
-                output_node_delta = (2 * (true_Label - predicted_value) * predicted_value * (1 - predicted_value))
+                output_node_delta = (2 * (predicted_value - true_Label) * predicted_value * (1 - predicted_value))
 
                 for weight_index in range(0, len(networkObject.network[layer_index][0].weights)):
                     # for each weight in the output node, use the delta to adjust the weight with the formula:
                     # new weight = old weight + (delta * learning rate * input from the previous layer to the current node)
                     previous_weight = networkObject.network[layer_index][0].weights[weight_index]
-                    new_weight = previous_weight + (output_node_delta * learning_rate * activations[layer_index - 1][weight_index])
+                    new_weight = previous_weight - (output_node_delta * learning_rate * activations[layer_index - 1][weight_index])
                     networkObject.network[layer_index][0].weights[weight_index] = new_weight
 
                 # update the bias
@@ -58,7 +58,7 @@ class sigmoid_optimizer:
                     # for each weight in the current node, use the current delta to update the weights of it's respective node
                     for weight_index in range(0, len(networkObject.network[layer_index][node_index].weights)):
                         old_weight = networkObject.network[layer_index][node_index].weights[weight_index]
-                        new_weight = old_weight + (learning_rate * current_delta * activations[layer_index - 1][weight_index])
+                        new_weight = old_weight - (learning_rate * current_delta * activations[layer_index - 1][weight_index])
                 
                         networkObject.network[layer_index][node_index].weights[weight_index] = new_weight
 

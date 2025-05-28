@@ -83,5 +83,6 @@ class TrainNetwork:
                 # backpropagate the error with respect to each weight
                 optimizer.backpropagate(net, activations, label)
             losses.append(mean_squared_error(labels, outputs))
+            print("loss at epoch " + str(i) + " is " + str(losses[-1]))
         
         return [inputs, labels, outputs]                        # return training metadata to caller

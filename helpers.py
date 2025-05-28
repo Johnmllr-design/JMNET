@@ -141,13 +141,13 @@ def plot(inputs, labels, predictions):
         plt.show()
 
     else:
-        print("the loss is " + str(mean_squared_error(labels, output)))
+        print("the loss is " + str(mean_squared_error(labels, predictions)))
 
         # Plotting the first line
         plt.plot(inputs, labels, label="labels")
 
         # Plotting the second line
-        plt.plot(inputs, output, label="predictions")
+        plt.plot(inputs, predictions, label="predictions")
 
         # Adding labels and title
         plt.xlabel("X-axis")
