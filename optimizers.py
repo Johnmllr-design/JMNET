@@ -3,6 +3,9 @@ from neural_network import NeuralNetwork
 from helpers import ReLU_derivative
 
 
+
+
+
 # class sigmoid_optimizer to implement the backprop for sigmoid
 class sigmoid_optimizer:
     def __init__(self):

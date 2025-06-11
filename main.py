@@ -15,13 +15,13 @@ print("this is the driver Python file for John's neural network implementation.\
 print("below is a sample demonstration of how the algorithm works to fit a line to a cosin curve. \n This is the only file that utilizes an external library, which is numpy for dataset generation\n")
 
 # declaration of a neural network with 1hidden layers and 3 nodes in each layer
-num_inputs = 3
+num_inputs = 1
 num_layers = 2
 num_nodes_per_layer = 5
 activation_function = "sigmoid"
 trainer = TrainNetwork() # declaration of a trainer for the network
 network = NeuralNetwork(num_inputs, num_layers, num_nodes_per_layer, activation_function)
-dataset =  sleep_data_three_observations()
+dataset =  cosin_curve()
 epochs = 20
 
 
@@ -31,7 +31,7 @@ metadata = trainer.train(network, dataset, epochs)
  # plot the metadata (inputs, outputs, labels) from model training
 plot(metadata[0], metadata[1], metadata[2])                
 
-
+user_data = []
 
 
 
